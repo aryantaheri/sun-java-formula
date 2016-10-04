@@ -46,6 +46,16 @@ create-java-home:
     - require:
       - archive: unpack-jdk-tarball
 
+create-java-bin:
+  alternatives.install:
+    - name: java
+    - link: /usr/bin/java
+    - path: {{ java.java_real_home }}/bin/java
+    - priority: 30
+    - onlyif: test -d {{ java.java_real_home }}
+    - require:
+      - archive: unpack-jdk-tarball
+
 update-java-home-symlink:
   file.symlink:
     - name: {{ java.java_home }}
